@@ -141,6 +141,14 @@ exports.Prisma.ProjectScalarFieldEnum = {
   deletedAt: 'deletedAt'
 };
 
+exports.Prisma.UserToProjectScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  projectId: 'projectId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -159,7 +167,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Project: 'Project'
+  Project: 'Project',
+  UserToProject: 'UserToProject'
 };
 
 /**
