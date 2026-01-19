@@ -117,7 +117,7 @@ export function AppSidebar() {
                             {open && (
                                 <SidebarMenuItem>
                                     <Link href='/create'>
-                                        <Button size='sm' variant={'outline'} className="w-fit ">
+                                        <Button size='sm' variant={'outline'} className=" cursor-pointer w-fit ">
                                             <Plus />
                                             Create Project
                                         </Button>
