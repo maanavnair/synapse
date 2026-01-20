@@ -4,6 +4,7 @@ import useProject from "@/hooks/use-project"
 import { useUser } from "@clerk/nextjs"
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
+import CommitLog from "./commit-log";
 
 export default function Dashboard() {
 
@@ -44,7 +45,7 @@ export default function Dashboard() {
             </div>
 
             <div className="mt-8"></div>
-            Commit Log
+            <CommitLog />
         </div>
     )
 }
