@@ -81,9 +81,9 @@ export function AppSidebar() {
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {projects?.map(project => {
+                            {projects?.map((project, index) => {
                                 return (
-                                    <SidebarMenuItem key={project.name}>
+                                    <SidebarMenuItem key={index}>
                                         <SidebarMenuButton asChild>
                                             <div
                                                 onClick={() => {
