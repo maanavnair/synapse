@@ -82,7 +82,11 @@ async function summariseCommits(githubUrl: string, commitHash: string) {
         });
         const data = response.data;
         const summary = await aiSummariseCommit(data);
-        return summary ?? "No summary available";
+        // return summary ?? "No summary available";
+        if (!summary || summary.trim().length < 10) {
+            throw new Error("Empty Gemini summary");
+        }
+        return summary;
     } catch (err) {
         console.error("Failed to fetch commit diff:", err);
         return "No summary available";
@@ -106,7 +110,10 @@ async function fetchProjectGithubUrl(projectId: string) {
 async function filterUnprocessedCommits(projectId: string, commitHashes: Response[]) {
     const processedCommits = await db.commit.findMany({
         where: {
-            projectId
+            projectId,
+            summary: {
+                not: ""
+            }
         }
     })
 

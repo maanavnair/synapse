@@ -1,6 +1,7 @@
 import z from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { pollCommit } from "@/lib/github";
+import redisIngestRepo from "@/lib/redis";
 
 
 export const projectRouter = createTRPCRouter({
@@ -11,6 +12,8 @@ export const projectRouter = createTRPCRouter({
             githubToken: z.string().optional()
         })
     ).mutation(async ({ ctx, input }) => {
+        const repoName = /github\.com\/([^/]+\/[^/]+)/.exec(input.githubUrl)?.[1];
+        if (!repoName) throw new Error("Invalid Github URL");
         const project = await ctx.db.project.create({
             data: {
                 githubUrl: input.githubUrl,
@@ -23,6 +26,7 @@ export const projectRouter = createTRPCRouter({
             }
         })
         await pollCommit(project.id);
+        await redisIngestRepo(repoName, input.githubToken ?? "", project.id);
         return project;
     }),
     getProjects: protectedProcedure.query(async ({ ctx }) => {
