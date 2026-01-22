@@ -1,5 +1,10 @@
 from dotenv import load_dotenv
 load_dotenv()
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+import asyncio
+import json
+from upstash_redis import Redis
 
 
 from upstash_redis import Redis
@@ -35,3 +40,28 @@ async def worker():
         except Exception as e:
             print(f"Error processing job: {e}")
             await asyncio.sleep(2)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    print("🚀 App starting up...")
+    task = asyncio.create_task(worker())
+
+    yield  # the app runs here while the worker runs in the background
+
+    # Shutdown logic
+    print("🛑 Shutting down...")
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        print("✅ Worker stopped.")
+
+
+app = FastAPI(lifespan=lifespan)
+
+
+@app.get("/health")
+async def health():
+    """Health check endpoint"""
+    return {"status": "ok"}
