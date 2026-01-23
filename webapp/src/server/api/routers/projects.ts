@@ -26,7 +26,7 @@ export const projectRouter = createTRPCRouter({
             }
         })
         await pollCommit(project.id);
-        await redisIngestRepo(repoName, input.githubToken ?? "", project.id);
+        await redisIngestRepo(repoName, input.githubToken || process.env.GITHUB_TOKEN!, project.id);
         return project;
     }),
     getProjects: protectedProcedure.query(async ({ ctx }) => {
@@ -45,6 +45,6 @@ export const projectRouter = createTRPCRouter({
         projectId: z.string()
     })).query(async ({ ctx, input }) => {
         pollCommit(input.projectId).then().catch(console.error)
-        return await ctx.db.commit.findMany({ where: { projectId: input.projectId } })
+        return await ctx.db.commit.findMany({ where: { projectId: input.projectId }, orderBy: { commitDate: 'desc' } })
     })
 })

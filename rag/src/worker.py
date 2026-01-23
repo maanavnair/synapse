@@ -5,11 +5,8 @@ from contextlib import asynccontextmanager
 import asyncio
 import json
 from upstash_redis import Redis
-
-
-from upstash_redis import Redis
-import asyncio
-import json
+from utils.index import loadDocAndStore
+import os
 
 redis = Redis.from_env()
 QUEUE_NAME = "repo-ingest-queue"
@@ -35,7 +32,7 @@ async def worker():
                 f"Processing job {jobId} for {projectId} where Repo URL is {repoUrl}"
             )
 
-            # await asyncio.to_thread(loadDocAndStore, repoUrl, accessToken, projectId)
+            await asyncio.to_thread(loadDocAndStore, repoUrl, accessToken, projectId)
 
         except Exception as e:
             print(f"Error processing job: {e}")
