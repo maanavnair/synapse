@@ -6,6 +6,7 @@ import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import CommitLog from "./commit-log";
 import AskQuestionCard from "./ask-question-card";
+import ArchiveButton from "./archive-button";
 
 export default function Dashboard() {
 
@@ -34,7 +35,7 @@ export default function Dashboard() {
                 <div className="flex items-center gap-4">
                     TeamMembers
                     InviteButton
-                    ArchiveButton
+                    <ArchiveButton />
                 </div>
             </div>
 
