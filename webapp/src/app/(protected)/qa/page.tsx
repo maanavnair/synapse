@@ -201,7 +201,7 @@ const ChatMainContent: React.FC = () => {
                     <button
                         type="submit"
                         disabled={!input.trim() || isLoading}
-                        className="inline-flex h-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground px-3 text-xs font-medium shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="cursor-pointer inline-flex h-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground px-3 text-xs font-medium shadow-sm transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isLoading ? "Sending..." : "Send"}
                     </button>
