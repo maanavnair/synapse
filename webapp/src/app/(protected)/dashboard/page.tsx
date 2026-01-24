@@ -7,6 +7,8 @@ import Link from "next/link";
 import CommitLog from "./commit-log";
 import AskQuestionCard from "./ask-question-card";
 import ArchiveButton from "./archive-button";
+import InviteButton from "./invite-button";
+import TeamMembers from "./team-members";
 
 export default function Dashboard() {
 
@@ -33,8 +35,8 @@ export default function Dashboard() {
 
                 <div className="h-4"></div>
                 <div className="flex items-center gap-4">
-                    TeamMembers
-                    InviteButton
+                    <TeamMembers />
+                    <InviteButton />
                     <ArchiveButton />
                 </div>
             </div>
